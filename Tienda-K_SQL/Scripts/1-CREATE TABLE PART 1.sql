@@ -1,9 +1,41 @@
---- Creación de Database
---- CREATE DATABASE Tienda_K
+--- Creación de BD
+--- CREATE DATABASE Tienda_K DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
---- Usar Database
+--- Usar DB
 USE Tienda_K;
 ---Show Tables;
+
+--- Tabla Usuario
+CREATE TABLE IF NOT EXISTS Usuario (
+	idUsuario INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	nombre VARCHAR(20) NOT NULL,
+	apellido VARCHAR(20) NOT NULL,
+    tipoDocumento ENUM('CC','TI', 'CE', 'Pasaporte') NOT NULL,
+    documento INT NOT NULL UNIQUE,
+	telefono VARCHAR(20) NOT NULL UNIQUE,
+	correo VARCHAR(70) NOT NULL UNIQUE,
+	direccion VARCHAR(20) NOT NULL,
+	contraseña VARCHAR(20) NOT NULL,
+	tipoUsuario ENUM('Registrado','Sin registrar') NOT NULL,
+);
+--- Describe Usuario;
+
+--- Tabla Empleado
+CREATE TABLE IF NOT EXISTS Empleado (
+    idEmpleado INT AUTO_INCREMENT PRIMARY KEY NOT NULL,	
+	tipoEmpleado ENUM('Administrador','Vendedor') NOT NULL,
+	idUsuario INT NOT NULL,
+    FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
+);
+--- Describe Empleado;
+
+--- Tabla Cliente
+CREATE TABLE IF NOT EXISTS Cliente (
+    idCliente INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    idUsuario INT NOT NULL,
+    FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
+);
+--- Describe Cliente;
 
 --- Tabla Producto
 CREATE TABLE IF NOT EXISTS Producto (
@@ -24,26 +56,27 @@ CREATE TABLE IF NOT EXISTS Stock (
 );
 --- Describe Stock;
 
---- Tabla ItemCarrito
-CREATE TABLE IF NOT EXISTS ItemCarrito (
-    idItemCarrito INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    cantidad INT NOT NULL,
-    precioUnitario FLOAT NOT NULL,
-    idProducto INT NOT NULL,
-    idCarritoCompra INT NOT NULL,
-    FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
-);
-
 --- Tabla CarritoCompra
 CREATE TABLE IF NOT EXISTS CarritoCompra (
     idCarritoCompra INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     fechaCreacion DATE NOT NULL,
     estado ENUM('VACIO','CON_PRODUCTOS', 'EN_PROCESO_DE_PAGO', 'PAGO_PENDIENTE', 'PAGO_EXITOSO') NOT NULL,
-    idUsuario INT NOT NULL
+    idUsuario INT NOT NULL,
+    FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
 );
 --- Describe CarritoCompra;
 
-ALTER TABLE ItemCarrito ADD CONSTRAINT fk_idCarritoCompra FOREIGN KEY (idCarritoCompra) REFERENCES CarritoCompra(idCarritoCompra);
+--- Tabla ItemCarrito
+CREATE TABLE IF NOT EXISTS ItemCarrito (
+    idItemCarrito INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    cantidad INT NOT NULL,
+    precioUnitario FLOAT NOT NULL,
+    idCarritoCompra INT NOT NULL,
+    idProducto INT NOT NULL,
+    FOREIGN KEY (idCarritoCompra) REFERENCES CarritoCompra(idCarritoCompra),
+    FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
+);
+--- Describe ItemCarrito
 
 --- Tabla Factura
 CREATE TABLE IF NOT EXISTS Factura (
@@ -55,9 +88,11 @@ CREATE TABLE IF NOT EXISTS Factura (
     idEmpleado INT NOT NULL,
     idCliente INT NOT NULL,
     idCarritoCompra INT NOT NULL,
+    FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado)
+    FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente)
     FOREIGN KEY (idCarritoCompra) REFERENCES CarritoCompra(idCarritoCompra)
 );
 --- Describe Factura;
 
----Altertable para colocar Foreign keys
----ALTER TABLE Factura ADD CONSTRAINT fk_idCliente FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente);
+
+
