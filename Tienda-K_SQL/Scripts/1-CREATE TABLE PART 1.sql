@@ -1,3 +1,6 @@
+--- Ingresar mysql
+--- mysql -h localhost -u root -p
+
 --- Creación de BD
 --- CREATE DATABASE Tienda_K DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
@@ -10,20 +13,20 @@ CREATE TABLE IF NOT EXISTS Usuario (
 	idUsuario INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	nombre VARCHAR(20) NOT NULL,
 	apellido VARCHAR(20) NOT NULL,
-    tipoDocumento ENUM('CC','TI', 'CE', 'Pasaporte') NOT NULL,
+    tipoDocumento ENUM('CC','TI', 'CE', 'PASAPORTE') NOT NULL,
     documento INT NOT NULL UNIQUE,
 	telefono VARCHAR(20) NOT NULL UNIQUE,
 	correo VARCHAR(70) NOT NULL UNIQUE,
 	direccion VARCHAR(20) NOT NULL,
-	contraseña VARCHAR(20) NOT NULL,
-	tipoUsuario ENUM('Registrado','Sin registrar') NOT NULL,
+	contrasena VARCHAR(20) NOT NULL,
+	tipoUsuario ENUM('REGISTRADO','SIN_REGISTRAR') NOT NULL,
 );
 --- Describe Usuario;
 
 --- Tabla Empleado
 CREATE TABLE IF NOT EXISTS Empleado (
     idEmpleado INT AUTO_INCREMENT PRIMARY KEY NOT NULL,	
-	tipoEmpleado ENUM('Administrador','Vendedor') NOT NULL,
+	tipoEmpleado ENUM('ADMINISTRADOR','VENDEDOR') NOT NULL,
 	idUsuario INT NOT NULL,
     FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
 );
