@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS Usuario (
 	correo VARCHAR(70) NOT NULL UNIQUE,
 	direccion VARCHAR(20) NOT NULL,
 	contrasena VARCHAR(20) NOT NULL,
-	tipoUsuario ENUM('REGISTRADO','SIN_REGISTRAR') NOT NULL,
+	tipoUsuario ENUM('REGISTRADO','SIN_REGISTRAR') NOT NULL
 );
 --- Describe Usuario;
 
@@ -91,8 +91,8 @@ CREATE TABLE IF NOT EXISTS Factura (
     idEmpleado INT NOT NULL,
     idCliente INT NOT NULL,
     idCarritoCompra INT NOT NULL,
-    FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado)
-    FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente)
+    FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado),
+    FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
     FOREIGN KEY (idCarritoCompra) REFERENCES CarritoCompra(idCarritoCompra)
 );
 --- Describe Factura;
