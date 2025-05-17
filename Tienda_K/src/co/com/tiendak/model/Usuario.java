@@ -6,7 +6,7 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private TipoDocumento tipoDocumento;
-    private int documento;
+    private int documento; //TODO: Cambia a string 
     private String telefono;
     private String correo;
     private String direccion;
