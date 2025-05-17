@@ -1,4 +1,4 @@
-package co.edu.konradlorenz.controller;
+package co.com.tiendak.controller;
 
 /**
  * @author Alejandra Duran

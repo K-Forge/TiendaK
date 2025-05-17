@@ -1,4 +1,4 @@
-package co.edu.konradlorenz.model;
+package co.com.tiendak.model;
 
 public class Usuario {
 
@@ -31,6 +31,19 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }//Cierre Constructor
 
+    public Usuario(int idUsuario, String nombre, String apellido, TipoDocumento tipoDocumento, int documento, String telefono, String correo, String direccion, String contrasena) {
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.tipoDocumento = tipoDocumento;
+        this.documento = documento;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.direccion = direccion;
+        this.contrasena = contrasena;
+        this.tipoUsuario = tipoUsuario;
+    }
+    
     public int getIdUsuario() {
         return idUsuario;
     }
