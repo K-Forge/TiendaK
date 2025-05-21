@@ -4,7 +4,7 @@ public class Cliente extends Usuario {
  
     private int idCliente; 
  
-    public Cliente(int idUsuario, String nombre, String apellido, TipoDocumento tipoDocumento, int documento, String telefono, String correo, String direccion, String contraseña, int idCliente) { 
+    public Cliente(int idUsuario, String nombre, String apellido, TipoDocumento tipoDocumento, String documento, String telefono, String correo, String direccion, String contraseña, int idCliente) { 
         super(idUsuario, nombre, apellido, tipoDocumento, documento, telefono, correo, direccion, contraseña); 
         this.idCliente = idCliente; 
     } 

@@ -6,7 +6,7 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private TipoDocumento tipoDocumento;
-    private int documento; //TODO: Cambia a string 
+    private String documento; 
     private String telefono;
     private String correo;
     private String direccion;
@@ -18,7 +18,7 @@ public class Usuario {
     }
 
     //Constructor con todos los atributos
-    public Usuario(int idUsuario, String nombre, String apellido, TipoDocumento tipoDocumento, int documento, String telefono, String correo, String direccion, String contrasena, TipoUsuario tipoUsuario) {
+    public Usuario(int idUsuario, String nombre, String apellido, TipoDocumento tipoDocumento, String documento, String telefono, String correo, String direccion, String contrasena, TipoUsuario tipoUsuario) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -31,7 +31,7 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }//Cierre Constructor
 
-    public Usuario(int idUsuario, String nombre, String apellido, TipoDocumento tipoDocumento, int documento, String telefono, String correo, String direccion, String contrasena) {
+    public Usuario(int idUsuario, String nombre, String apellido, TipoDocumento tipoDocumento, String documento, String telefono, String correo, String direccion, String contrasena) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -76,11 +76,11 @@ public class Usuario {
         this.tipoDocumento = tipoDocumento;
     }
 
-    public int getDocumento() {
+    public String getDocumento() {
         return documento;
     }
 
-    public void setDocumento(int documento) {
+    public void setDocumento(String documento) {
         this.documento = documento;
     }
 

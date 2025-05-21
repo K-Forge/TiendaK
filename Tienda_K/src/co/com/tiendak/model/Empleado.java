@@ -5,7 +5,7 @@ public class Empleado extends Usuario {
     private int idEmpleado; 
     private TipoEmpleado tipoEmpleado; 
  
-    public Empleado(int idUsuario, String nombre, String apellido, TipoDocumento tipoDocumento, int documento, String telefono, String correo, String direccion, String contraseña, int idEmpleado, TipoEmpleado tipoEmpleado) { 
+    public Empleado(int idUsuario, String nombre, String apellido, TipoDocumento tipoDocumento, String documento, String telefono, String correo, String direccion, String contraseña, int idEmpleado, TipoEmpleado tipoEmpleado) { 
         super(idUsuario, nombre, apellido, tipoDocumento, documento, telefono, correo, direccion, contraseña); 
         this.idEmpleado = idEmpleado; 
         this.tipoEmpleado = tipoEmpleado; 
