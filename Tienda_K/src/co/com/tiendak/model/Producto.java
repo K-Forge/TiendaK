@@ -1,19 +1,19 @@
 package co.com.tiendak.model;
 
+import co.com.tiendak.model.enums.Categoria;
+
 public class Producto { 
  
     private int idProducto; 
     private Categoria categoria; 
     private String nombre; 
     private double precioUnitario; 
-    private int stock; 
  
-    public Producto(int idProducto, Categoria categoria, String nombre, double precioUnitario, int stock) { 
+    public Producto(int idProducto, Categoria categoria, String nombre, double precioUnitario) { 
         this.idProducto = idProducto; 
         this.categoria = categoria; 
         this.nombre = nombre; 
         this.precioUnitario = precioUnitario; 
-        this.stock = stock; 
     } 
  
     public int getIdProducto() { 
@@ -48,16 +48,9 @@ public class Producto {
         this.precioUnitario = precioUnitario; 
     } 
  
-    public int getStock() { 
-        return stock; 
-    } 
- 
-    public void setStock(int stock) { 
-        this.stock = stock; 
-    } 
  
     @Override 
     public String toString() { 
-        return "Producto{" + "idProducto=" + idProducto + ", categoria=" + categoria + ", nombre=" + nombre + ", precioUnitario=" + precioUnitario + ", stock=" + stock + '}'; 
+        return "Producto{" + "idProducto=" + idProducto + ", categoria=" + categoria + ", nombre=" + nombre + ", precioUnitario=" + precioUnitario +'}'; 
     } 
 } 
