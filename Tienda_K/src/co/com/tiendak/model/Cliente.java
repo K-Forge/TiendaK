@@ -1,8 +1,18 @@
 package co.com.tiendak.model;
 
+import co.com.tiendak.model.enums.TipoDocumento;
+
 public class Cliente extends Usuario { 
  
     private int idCliente; 
+
+    public Cliente() {
+    }
+
+    public Cliente(int idCliente, int idUsuario) {
+        super(idUsuario);
+        this.idCliente = idCliente;
+    }
  
     public Cliente(int idUsuario, String nombre, String apellido, TipoDocumento tipoDocumento, String documento, String telefono, String correo, String direccion, String contraseña, int idCliente) { 
         super(idUsuario, nombre, apellido, tipoDocumento, documento, telefono, correo, direccion, contraseña); 
