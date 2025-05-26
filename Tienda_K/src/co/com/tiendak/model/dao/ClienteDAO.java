@@ -1,15 +1,17 @@
 package co.com.tiendak.model.dao;
 
-import co.com.tiendak.model.*;
+import co.com.tiendak.model.Cliente;
+import co.com.tiendak.model.connection.DBConnection;
+
 import java.sql.*;
 import java.util.*;
 
 public class ClienteDAO {
 
-    //private final Connection conn;
+    private final Connection conn;
 
     public ClienteDAO() {
-        //this.conn = DBConnection.getConnection();
+        this.conn = DBConnection.getConnection().getConn();
     }
 
     /** Recupera todos los clientes. */

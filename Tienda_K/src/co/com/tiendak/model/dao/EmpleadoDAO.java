@@ -1,16 +1,18 @@
 package co.com.tiendak.model.dao;
 
 import co.com.tiendak.model.*;
+import co.com.tiendak.model.connection.DBConnection;
+
 import java.sql.*;
 import java.util.*;
 import co.com.tiendak.model.enums.TipoEmpleado;
 
 public class EmpleadoDAO {
 
-    //private final Connection conn;
+    private final Connection conn;
 
     public EmpleadoDAO() {
-      //  this.conn = DBConnection.getConnection();
+        this.conn = DBConnection.getConnection().getConn();
     }
 
     /** Recupera todos los empleados. */
@@ -100,7 +102,7 @@ public class EmpleadoDAO {
     private Empleado mapearEmpleado(ResultSet rs) throws SQLException {
         return new Empleado(
             rs.getInt("idUsuario"),
-            TipoEmpleado.valueOf(rs.getString("empleado"))
+            TipoEmpleado.valueOf(rs.getString("tipoEmpleado"))
         );
     }
 }

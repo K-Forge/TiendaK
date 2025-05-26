@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Conexion {
+public class DBConnection {
 
     //Configuración de la conexión a la base de datos
     public static String usuario = "root";
@@ -13,34 +13,34 @@ public class Conexion {
     public static String url = "jdbc:mysql://localhost:3306/tienda_k";
 
     //Patron Singleton para la conexión
-    private static Conexion conex = null;
-    private Connection conn;
+    private static DBConnection conn = null;
+    private Connection connection;
 
-    private Conexion() {
+    private DBConnection() {
         try {
             Class.forName(driver);
-            conn = DriverManager.getConnection(url, usuario, clave);
+            connection = DriverManager.getConnection(url, usuario, clave);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());
         }
     }
 
-    public static Conexion getConexion(){
-        if(conex == null){
-            conex = new Conexion();
+    public static DBConnection getConnection(){
+        if(conn == null){
+            conn = new DBConnection();
         }
-        return conex;
-    }
-
-    public Connection getConn() {
         return conn;
     }
 
+    public Connection getConn() {
+        return connection;
+    }
+
     public void cerrarConexion() {
-        if (conn != null) {
+        if (connection != null) {
             try {
-               conn.close();
+               connection.close();
                System.out.println("Conexión cerrada exitosamente.");
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -1,15 +1,17 @@
 package co.com.tiendak.model.dao;
 
 import co.com.tiendak.model.*;
+import co.com.tiendak.model.connection.DBConnection;
+
 import java.sql.*;
 import java.util.*;
 
 public class StockDAO {
     
-    //private final Connection conn;
+    private final Connection conn;
 
     public StockDAO() {
-        //this.conn = DBConnection.getConnection();
+        this.conn = DBConnection.getConnection().getConn();
     }
 
     public List<Stock> listarTodos() {
