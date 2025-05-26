@@ -1,5 +1,8 @@
 package co.com.tiendak.model;
 
+import co.com.tiendak.model.enums.TipoDocumento;
+import co.com.tiendak.model.enums.TipoUsuario;
+
 public class Usuario {
 
     private int idUsuario;
@@ -15,6 +18,10 @@ public class Usuario {
 
     //Constructor Vacio
     public Usuario (){
+    }
+
+    public Usuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     //Constructor con todos los atributos
