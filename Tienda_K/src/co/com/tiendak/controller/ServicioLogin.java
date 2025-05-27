@@ -49,13 +49,30 @@ public class ServicioLogin {
         String password = sc.nextLine();
         
         Usuario u = usuario.buscarPorDocumento(doc);
-        if(u != null && u.getContrasena().equals(password) && u.getTipoUsuario() == TipoUsuario.REGISTRADO){
+        if(u != null && u.getContrasena().equals(password) && u.getTipoUsuario() == TipoUsuario.REGISTRADO) {
         Empleado e = empleadoDAO.buscarPorId(u.getIdUsuario());
-        if(e != null)
+        if (e != null) {
+            // Seteamos los datos comunes heredados de Usuario
+            e.setNombre(u.getNombre());
+            e.setApellido(u.getApellido());
+            e.setDocumento(u.getDocumento());
+            e.setCorreo(u.getCorreo());
+            e.setDireccion(u.getDireccion());
+            e.setTelefono(u.getTelefono());
+            e.setTipoDocumento(u.getTipoDocumento());
+            e.setContrasena(u.getContrasena());
+            e.setTipoUsuario(u.getTipoUsuario());
+
+            if (e.getTipoEmpleado() == TipoEmpleado.ADMINISTRADOR) {
+                ventana.mostrarMensaje("🔐 Bienvenido Administrador " + e.getNombre());
+            } else {
+                ventana.mostrarMensaje("👤 Bienvenido Empleado " + e.getNombre());
+            }
             return e;
+        }
     }
-        System.out.println("Credenciales Incorrectas.");
-        return null;
+    System.out.println("❌ Credenciales Incorrectas.");
+    return null;
     }
     
     private Usuario leerUsuarioComun(Scanner sc, TipoUsuario tu) {

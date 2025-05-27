@@ -2,10 +2,12 @@ package co.com.tiendak.model.dao;
 
 import co.com.tiendak.model.*;
 import co.com.tiendak.model.connection.DBConnection;
+import co.com.tiendak.model.enums.TipoDocumento;
 
 import java.sql.*;
 import java.util.*;
 import co.com.tiendak.model.enums.TipoEmpleado;
+import co.com.tiendak.model.enums.TipoUsuario;
 
 public class EmpleadoDAO {
 
@@ -35,7 +37,8 @@ public class EmpleadoDAO {
 
     /** Busca un empleado por su ID de usuario. */
     public Empleado buscarPorId(int idUsuario) {
-        String sql = "SELECT idUsuario, tipoEmpleado FROM Empleado WHERE idUsuario = ?";
+        String sql = "SELECT u.idUsuario, u.nombre, u.apellido, u.tipoDocumento, u.documento, u.telefono, u.correo, u.direccion, u.contrasena, u.tipoUsuario, e.tipoEmpleado " +
+                 "FROM Usuario u JOIN Empleado e ON u.idUsuario = e.idUsuario WHERE u.idUsuario = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, idUsuario);
             try (ResultSet rs = ps.executeQuery()) {
@@ -107,8 +110,13 @@ public class EmpleadoDAO {
     emp.setIdUsuario(rs.getInt("idUsuario"));
     emp.setNombre(rs.getString("nombre"));
     emp.setApellido(rs.getString("apellido"));
-    emp.setDireccion(rs.getString("direccion"));
+    emp.setTipoDocumento(TipoDocumento.valueOf(rs.getString("tipoDocumento")));
+    emp.setDocumento(rs.getString("documento"));
     emp.setTelefono(rs.getString("telefono"));
+    emp.setCorreo(rs.getString("correo"));
+    emp.setDireccion(rs.getString("direccion"));
+    emp.setContrasena(rs.getString("contrasena"));
+    emp.setTipoUsuario(TipoUsuario.valueOf(rs.getString("tipoUsuario")));
     emp.setTipoEmpleado(TipoEmpleado.valueOf(rs.getString("tipoEmpleado")));
     return emp;
 }
