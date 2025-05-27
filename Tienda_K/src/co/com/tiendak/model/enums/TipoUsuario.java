@@ -1,5 +1,5 @@
 package co.com.tiendak.model.enums;
 
 public enum TipoUsuario {
-    CLIENTE, EMPLEADO; // Definicion de los tipos de usuarios
+    REGISTRADO, SIN_REGISTRAR; // Definicion de los tipos de usuarios
 }

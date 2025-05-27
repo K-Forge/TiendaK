@@ -20,6 +20,7 @@ public class DBConnection {
         try {
             Class.forName(driver);
             connection = DriverManager.getConnection(url, usuario, clave);
+            System.out.println("Conexion Exitosa");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());

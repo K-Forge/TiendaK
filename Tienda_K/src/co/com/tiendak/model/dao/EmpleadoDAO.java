@@ -17,18 +17,21 @@ public class EmpleadoDAO {
 
     /** Recupera todos los empleados. */
     public List<Empleado> listarTodos() {
-        List<Empleado> lista = new ArrayList<>();
-        String sql = "SELECT idUsuario, tipoEmpleado FROM Empleado";
-        try (Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            while (rs.next()) {
-                lista.add(mapearEmpleado(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    List<Empleado> lista = new ArrayList<>();
+    String sql = "SELECT u.idUsuario, u.nombre, u.apellido, u.direccion, u.telefono, e.tipoEmpleado " +
+                 "FROM Usuario u " +
+                 "JOIN Empleado e ON u.idUsuario = e.idUsuario";
+
+    try (Statement st = conn.createStatement();
+         ResultSet rs = st.executeQuery(sql)) {
+        while (rs.next()) {
+            lista.add(mapearEmpleado(rs));
         }
-        return lista;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return lista;
+}
 
     /** Busca un empleado por su ID de usuario. */
     public Empleado buscarPorId(int idUsuario) {
@@ -100,9 +103,13 @@ public class EmpleadoDAO {
 
     /** Mapea un ResultSet a un objeto Empleado. */
     private Empleado mapearEmpleado(ResultSet rs) throws SQLException {
-        return new Empleado(
-            rs.getInt("idUsuario"),
-            TipoEmpleado.valueOf(rs.getString("tipoEmpleado"))
-        );
-    }
+    Empleado emp = new Empleado();
+    emp.setIdUsuario(rs.getInt("idUsuario"));
+    emp.setNombre(rs.getString("nombre"));
+    emp.setApellido(rs.getString("apellido"));
+    emp.setDireccion(rs.getString("direccion"));
+    emp.setTelefono(rs.getString("telefono"));
+    emp.setTipoEmpleado(TipoEmpleado.valueOf(rs.getString("tipoEmpleado")));
+    return emp;
+}
 }

@@ -64,23 +64,33 @@ public class UsuarioDAO {
     }
     
     //Inserta nuevo usuario en bd
-    public void crear(Usuario u) {
-        String sql = "INSERT INTO Usuario(nombre, apellido, tipoDocumento, documento, telefono, correo, direccion, contrasena, tipoUsuario) VALUES(?,?,?,?,?,?,?,?,?)";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, u.getNombre());
-            ps.setString(2, u.getApellido());
-            ps.setString(3, u.getTipoDocumento().name());
-            ps.setString(4, u.getDocumento());
-            ps.setString(5, u.getTelefono());
-            ps.setString(6, u.getCorreo());
-            ps.setString(7, u.getDireccion());
-            ps.setString(8, u.getContrasena());
-            ps.setString(9, u.getTipoUsuario().name());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public int crear(Usuario u) {
+    String sql = "INSERT INTO Usuario(nombre, apellido, tipoDocumento, documento, telefono, correo, direccion, contrasena, tipoUsuario) " +
+                 "VALUES(?,?,?,?,?,?,?,?,?)";
+    try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        ps.setString(1, u.getNombre());
+        ps.setString(2, u.getApellido());
+        ps.setString(3, u.getTipoDocumento().name());
+        ps.setString(4, u.getDocumento());
+        ps.setString(5, u.getTelefono());
+        ps.setString(6, u.getCorreo());
+        ps.setString(7, u.getDireccion());
+        ps.setString(8, u.getContrasena());
+        ps.setString(9, u.getTipoUsuario().name());
+        int filas = ps.executeUpdate();
+
+        if (filas > 0) {
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // ID generado
+                }
+            }
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return -1; // Indica que hubo error
+}
 
     //Modificar datos de un usuario existente 
     public void actualizar(Usuario u) {
