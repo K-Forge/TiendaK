@@ -27,22 +27,29 @@ public class DBConnection {
         }
     }
 
-    public static DBConnection getConnection(){
-        if(conn == null){
+    public static DBConnection getConnection() {
+        if (conn == null) {
             conn = new DBConnection();
         }
         return conn;
     }
 
     public Connection getConn() {
+        try {
+            if (connection == null || connection.isClosed()) {
+                connection = DriverManager.getConnection(url, usuario, clave);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return connection;
     }
 
     public void cerrarConexion() {
         if (connection != null) {
             try {
-               connection.close();
-               System.out.println("Conexión cerrada exitosamente.");
+                connection.close();
+                System.out.println("Conexión cerrada exitosamente.");
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.out.println("Error al cerrar la conexión: " + e.getMessage());

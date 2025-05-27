@@ -86,14 +86,31 @@ public class ProductoDAO {
         }
     }
 
-    public void eliminar(int id) {
-        String sql = "DELETE FROM Producto WHERE idProducto = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void eliminar(int idProducto) {
+        String eliminarStockSQL = "DELETE FROM stock WHERE idProducto = ?";
+    String eliminarProductoSQL = "DELETE FROM producto WHERE idProducto = ?";
+
+    try (Connection conn = DBConnection.getConnection().getConn();
+         PreparedStatement psStock = conn.prepareStatement(eliminarStockSQL);
+         PreparedStatement psProducto = conn.prepareStatement(eliminarProductoSQL)) {
+
+        // Eliminar primero el stock
+        psStock.setInt(1, idProducto);
+        psStock.executeUpdate();
+
+        // Luego eliminar el producto
+        psProducto.setInt(1, idProducto);
+        int filas = psProducto.executeUpdate();
+
+        if (filas > 0) {
+            System.out.println("✅ Producto eliminado.");
+        } else {
+            System.out.println("⚠️ No se encontró el producto con ID: " + idProducto);
         }
+
+    } catch (SQLException e) {
+        System.out.println("❌ Error al eliminar producto: " + e.getMessage());
+    }
     }
 
     private Producto mapearProducto(ResultSet rs) throws SQLException {

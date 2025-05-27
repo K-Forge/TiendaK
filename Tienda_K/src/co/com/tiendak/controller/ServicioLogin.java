@@ -20,7 +20,7 @@ public class ServicioLogin {
         if(idUsuario>0){
             Cliente c = new Cliente(); c.setIdCliente(idUsuario);
             clienteDAO.actualizar(c);
-            ventana.mostrarMensaje("✅ Cliente registrado con ID " + idUsuario);
+            ventana.mostrarMensaje("Cliente registrado con ID " + idUsuario);
         }
     }
     
@@ -35,7 +35,17 @@ public class ServicioLogin {
         Usuario u = usuario.buscarPorDocumento(doc);
         if(u != null && u.getContrasena().equals(password) && u.getTipoUsuario() == TipoUsuario.REGISTRADO) {
             Cliente c = clienteDAO.buscarPorUsuario(u.getIdUsuario());
-            if (c != null) return c;
+            if (c != null) 
+            c.setNombre(u.getNombre());
+            c.setApellido(u.getApellido());
+            c.setDocumento(u.getDocumento());
+            c.setCorreo(u.getCorreo());
+            c.setDireccion(u.getDireccion());
+            c.setTelefono(u.getTelefono());
+            c.setTipoDocumento(u.getTipoDocumento());
+            c.setContrasena(u.getContrasena());
+            c.setTipoUsuario(u.getTipoUsuario());    
+            return c;
         }
         System.out.println("Credenciales incorrectas.");
         return null;
@@ -64,14 +74,14 @@ public class ServicioLogin {
             e.setTipoUsuario(u.getTipoUsuario());
 
             if (e.getTipoEmpleado() == TipoEmpleado.ADMINISTRADOR) {
-                ventana.mostrarMensaje("🔐 Bienvenido Administrador " + e.getNombre());
+                ventana.mostrarMensaje("Bienvenido Administrador " + e.getNombre());
             } else {
-                ventana.mostrarMensaje("👤 Bienvenido Empleado " + e.getNombre());
+                ventana.mostrarMensaje("Bienvenido Empleado " + e.getNombre());
             }
             return e;
         }
     }
-    System.out.println("❌ Credenciales Incorrectas.");
+    System.out.println("Credenciales Incorrectas.");
     return null;
     }
     
