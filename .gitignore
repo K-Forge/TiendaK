@@ -1,8 +1,28 @@
-/TiendaK/nbproject/private/
 build/
 dist/
 nbproject/private/
 nbproject/build-impl.xml
 nbproject/genfiles.properties
 
-TiendaK/nbproject/
+BACKPEYE/nbproject/
+
+.java-version
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Logs
+*.log
+
+# Secrets
+.env
