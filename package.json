@@ -1,14 +1,14 @@
 {
   "name": "tienda-k",
   "version": "1.0.0",
-  "description": "Tienda-K - Proyecto del club K-Forge.",
+  "description": "TiendaK - Proyecto del club K-Forge.",
   "scripts": {
     "install:gitglow-hook": "sh ./scripts/macos-git-glow.sh",
     "install:gitglow-hook:win": "powershell -ExecutionPolicy Bypass -File ./scripts/windows-git-glow.ps1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/K-Forge/Tienda-K.git"
+    "url": "git+https://github.com/K-Forge/TiendaK.git"
   },
   "author": "",
   "license": "ISC"

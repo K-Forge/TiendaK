@@ -1,4 +1,4 @@
-# Tienda-K
+# TiendaK
 
 ## 🚦 Requisito para Commits
 

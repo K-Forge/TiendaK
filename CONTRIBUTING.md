@@ -1,4 +1,4 @@
-# 🛠️ Guía para Contribuir a Tienda-K
+# 🛠️ Guía para Contribuir a TiendaK
 
 ## 📌 Convención para Commits
 Para mantener un historial limpio y comprensible, seguimos la convención **Git Glow** y el flujo de trabajo basado en ramas. Usa el siguiente formato para tus commits:
