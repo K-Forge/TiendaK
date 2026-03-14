@@ -1,5 +1,5 @@
 -- Creación de BD (Comentado igual que el original)
--- CREATE DATABASE tienda-K;
+-- CREATE DATABASE "tienda-k";
 
 -- En Postgres no se usa USE, se conecta a la base de datos directamente.
 -- \c tienda-K;
@@ -51,11 +51,11 @@ CREATE TABLE IF NOT EXISTS Usuario (
     nombre VARCHAR(20) NOT NULL,
     apellido VARCHAR(20) NOT NULL,
     tipoDocumento tipo_documento_enum NOT NULL,
-    documento INT NOT NULL UNIQUE,
+    documento VARCHAR(20) NOT NULL UNIQUE,
     telefono VARCHAR(20) NOT NULL UNIQUE,
     correo VARCHAR(70) NOT NULL UNIQUE,
-    direccion VARCHAR(20) NOT NULL,
-    contrasena VARCHAR(20) NOT NULL,
+    direccion VARCHAR(100) NOT NULL,
+    contrasena VARCHAR(250) NOT NULL,
     tipoUsuario tipo_usuario_enum NOT NULL
 );
 
@@ -79,14 +79,14 @@ CREATE TABLE IF NOT EXISTS Producto (
     idProducto SERIAL PRIMARY KEY,
     categoria categoria_producto_enum NOT NULL,
     nombreProducto VARCHAR(50) NOT NULL,
-    precioUnitario DOUBLE PRECISION NOT NULL
+    precioUnitario NUMERIC(10,2) NOT NULL
 );
 
 -- Tabla Stock
 CREATE TABLE IF NOT EXISTS Stock (
     idStock SERIAL PRIMARY KEY,
     idProducto INT NOT NULL,
-    fechaIngreso DATE NOT NULL,
+    fechaIngreso TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     stock INT NOT NULL,
     FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
 );
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS Stock (
 -- Tabla CarritoCompra
 CREATE TABLE IF NOT EXISTS CarritoCompra (
     idCarritoCompra SERIAL PRIMARY KEY,
-    fechaCreacion DATE NOT NULL,
+    fechaCreacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     estado estado_carrito_enum NOT NULL,
     idUsuario INT NOT NULL,
     FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
@@ -102,11 +102,11 @@ CREATE TABLE IF NOT EXISTS CarritoCompra (
 
 -- Tabla ItemCarrito
 CREATE TABLE IF NOT EXISTS ItemCarrito (
-    idItemCarrito SERIAL PRIMARY KEY,
     cantidad INT NOT NULL,
-    precioUnitario DOUBLE PRECISION NOT NULL,
+    precioUnitario NUMERIC(10,2) NOT NULL,
     idCarritoCompra INT NOT NULL,
     idProducto INT NOT NULL,
+    PRIMARY KEY (idCarritoCompra, idProducto),
     FOREIGN KEY (idCarritoCompra) REFERENCES CarritoCompra(idCarritoCompra),
     FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
 );
@@ -114,10 +114,10 @@ CREATE TABLE IF NOT EXISTS ItemCarrito (
 -- Tabla Factura
 CREATE TABLE IF NOT EXISTS Factura (
     idFactura SERIAL PRIMARY KEY,
-    fechaCompra DATE NOT NULL,
-    totalCompra DOUBLE PRECISION NOT NULL,
+    fechaCompra TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    totalCompra NUMERIC(10,2) NOT NULL,
     metodoPago metodo_pago_enum NOT NULL,
-    iva DOUBLE PRECISION NOT NULL,
+    iva NUMERIC(10,2) NOT NULL,
     idEmpleado INT NOT NULL,
     idCliente INT NOT NULL,
     idCarritoCompra INT NOT NULL,
@@ -125,3 +125,15 @@ CREATE TABLE IF NOT EXISTS Factura (
     FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
     FOREIGN KEY (idCarritoCompra) REFERENCES CarritoCompra(idCarritoCompra)
 );
+
+CREATE TABLE DetalleFactura (
+    idFactura INT NOT NULL,
+    idProducto INT NOT NULL,
+    cantidad INT NOT NULL CHECK (cantidad > 0),
+    precioUnitario NUMERIC(10,2) NOT NULL,
+    PRIMARY KEY (idFactura, idProducto),
+    FOREIGN KEY (idFactura) REFERENCES Factura(idFactura),
+    FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
+);
+
+--TO DO: Revisar cardinaliad de roles 
